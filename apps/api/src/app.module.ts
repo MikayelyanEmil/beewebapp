@@ -3,12 +3,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: `.env.${process.env.NODE_ENV}`,
+      isGlobal: true
+    }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../..', 'frontend', 'out'),
-    }),
+    })
   ],
   controllers: [AppController],
   providers: [AppService],
