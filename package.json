@@ -1,0 +1,22 @@
+{
+  "name": "beewebapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "start": "node apps/api/dist/main"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "npm@11.1.0",
+  "devDependencies": {
+    "turbo": "^2.4.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}
