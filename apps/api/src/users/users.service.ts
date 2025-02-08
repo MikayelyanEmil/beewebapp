@@ -21,23 +21,4 @@ export class UsersService {
             }
         });
     }
-
-    async saveRefreshToken(refresh_token: string, user_id: string): Promise<void> {
-        await this.prisma.token.upsert({
-            where: {
-                user_id
-            },
-            create: {
-                refresh_token,
-                user: {
-                    connect: { 
-                        id: user_id 
-                    }
-                }
-            },
-            update: {
-                refresh_token
-            }
-        });
-    }
 }

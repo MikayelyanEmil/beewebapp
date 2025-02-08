@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { JWTPayload } from './interfaces/jwt-payload';
 import { UsersService } from 'src/users/users.service';
+import { TokensService } from 'src/tokens/tokens.service';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -11,12 +12,13 @@ export class AuthService {
     constructor(
         private configService: ConfigService,
         private jwtService: JwtService,
-        private usersService: UsersService
+        private usersService: UsersService,
+        private tokensService: TokensService
     ) { }
 
     async authenticate(payload: JWTPayload): Promise<AuthTokens> {
         const tokens = await this.generateTokens(payload);
-        await this.usersService.saveRefreshToken(tokens.refresh_token, payload.sub);
+        await this.tokensService.createOrUpdate(tokens.refresh_token, payload.sub);
         return tokens;
     }
 
