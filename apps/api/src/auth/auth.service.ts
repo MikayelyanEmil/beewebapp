@@ -16,13 +16,7 @@ export class AuthService {
         private tokensService: TokensService
     ) { }
 
-    async authenticate(payload: JWTPayload): Promise<AuthTokens> {
-        const tokens = await this.generateTokens(payload);
-        await this.tokensService.createOrUpdate(tokens.refresh_token, payload.sub);
-        return tokens;
-    }
-
-    private async generateTokens(payload: JWTPayload): Promise<AuthTokens> {
+    async generateTokens(payload: JWTPayload): Promise<AuthTokens> {
         const [access_token, refresh_token] = await Promise.all([
             this.jwtService.signAsync(payload, {
                 secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
@@ -33,6 +27,7 @@ export class AuthService {
                 expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRY')
             })
         ]);
+        await this.tokensService.createOrUpdate(refresh_token, payload.sub);
         return {
             access_token,
             refresh_token

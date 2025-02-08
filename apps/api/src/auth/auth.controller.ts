@@ -23,7 +23,7 @@ export class AuthController {
     @UseFilters(PrismaClientExceptionFilter) // each email is unique in db. Catches related errors.
     async signup(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
         const { id, email } = await this.userService.create(createUserDto);
-        const { access_token, refresh_token } = await this.authService.authenticate({ sub: id, email });
+        const { access_token, refresh_token } = await this.authService.generateTokens({ sub: id, email });
         res.cookie('refresh_token', refresh_token, { maxAge: this.configService.get('COOKIE_MAX_AGE'), httpOnly: true });
         res.status(200).json({ access_token });
     }
@@ -31,7 +31,7 @@ export class AuthController {
     @Post('login')
     @UseGuards(LocalAuthGuard)
     async login(@Req() req: Request, @Res() res: Response) {
-        const { access_token, refresh_token } = await this.authService.authenticate(req.user as JWTPayload)
+        const { access_token, refresh_token } = await this.authService.generateTokens(req.user as JWTPayload)
         res.cookie('refresh_token', refresh_token, { maxAge: this.configService.get('COOKIE_MAX_AGE'), httpOnly: true });
         res.status(200).json({ access_token });
     }
