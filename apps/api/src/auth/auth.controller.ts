@@ -7,13 +7,15 @@ import { PrismaClientExceptionFilter } from 'src/prisma-client-exception/prisma-
 import { UsersService } from 'src/users/users.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JWTPayload } from './interfaces/jwt-payload';
+import { TokensService } from 'src/tokens/tokens.service';
 
 @Controller('auth')
 export class AuthController {
     constructor(
         private authService: AuthService,
         private configService: ConfigService,
-        private userService: UsersService
+        private userService: UsersService,
+        private tokensService: TokensService
     ) { }
 
     @Post('signup')
@@ -35,7 +37,9 @@ export class AuthController {
     }
 
     @Post('logout')
-    async logout() {
-
+    async logout(@Req() req: Request, @Res() res: Response) {
+        await this.tokensService.delete(req.cookies.refresh_token);
+        res.clearCookie('refresh_token');
+        res.sendStatus(200);
     }
 }

@@ -4,7 +4,7 @@ import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class TokensService {
-    constructor(private prisma: PrismaService) {}
+    constructor(private prisma: PrismaService) { }
 
     async createOrUpdate(refresh_token: string, user_id: string): Promise<Token> {
         return await this.prisma.token.upsert({
@@ -14,8 +14,8 @@ export class TokensService {
             create: {
                 refresh_token,
                 user: {
-                    connect: { 
-                        id: user_id 
+                    connect: {
+                        id: user_id
                     }
                 }
             },
@@ -23,5 +23,11 @@ export class TokensService {
                 refresh_token
             }
         });
+    }
+
+    async delete(refresh_token): Promise<Token> {
+        return await this.prisma.token.delete({
+            where: { refresh_token }
+        })
     }
 }
