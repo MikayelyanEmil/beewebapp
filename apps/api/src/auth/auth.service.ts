@@ -19,7 +19,7 @@ export class AuthService {
         const user = await this.usersService.create(createUserDto);
         const { access_token, refresh_token } = await this.generateTokens({ sub: user.id, email: user.email });
         await this.usersService.saveRefreshToken({ user: { connect: { id: user.id } }, refresh_token }, user.id);
-        return { access_token, refresh_token }
+        return { access_token, refresh_token };
     }
 
     private async generateTokens(payload: JWTPayload): Promise<AuthTokens> {
