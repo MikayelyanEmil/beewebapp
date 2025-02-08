@@ -22,14 +22,21 @@ export class UsersService {
         });
     }
 
-    async saveRefreshToken(data: Prisma.TokenCreateInput, user_id: string | undefined): Promise<void> {
+    async saveRefreshToken(refresh_token: string, user_id: string): Promise<void> {
         await this.prisma.token.upsert({
             where: {
                 user_id
             },
-            create: data,
+            create: {
+                refresh_token,
+                user: {
+                    connect: { 
+                        id: user_id 
+                    }
+                }
+            },
             update: {
-                refresh_token: data.refresh_token
+                refresh_token
             }
         });
     }

@@ -1,11 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { AuthTokens } from './interfaces/auth-tokens';
-import { CreateUserDto } from './dto/create-user.dto';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { JWTPayload } from './interfaces/jwt-payload';
 import { UsersService } from 'src/users/users.service';
-import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -15,11 +13,10 @@ export class AuthService {
         private usersService: UsersService
     ) { }
 
-    async signup(createUserDto: CreateUserDto): Promise<AuthTokens> {
-        const user = await this.usersService.create(createUserDto);
-        const { access_token, refresh_token } = await this.generateTokens({ sub: user.id, email: user.email });
-        await this.usersService.saveRefreshToken({ user: { connect: { id: user.id } }, refresh_token }, user.id);
-        return { access_token, refresh_token };
+    async authenticate(payload: JWTPayload): Promise<AuthTokens> {
+        const tokens = await this.generateTokens(payload);
+        await this.usersService.saveRefreshToken(tokens.refresh_token, payload.sub);
+        return tokens;
     }
 
     private async generateTokens(payload: JWTPayload): Promise<AuthTokens> {
