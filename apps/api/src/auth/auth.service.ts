@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { JWTPayload } from './interfaces/jwt-payload';
 import { UsersService } from 'src/users/users.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -34,5 +35,16 @@ export class AuthService {
             access_token,
             refresh_token
         }
+    }
+
+    async validateUser(email: string, password: string): Promise<JWTPayload | null> {
+        const user = await this.usersService.findByEmail(email);
+        let payload: JWTPayload;
+        if (user && await bcrypt.compare(password, user.password)) {
+            const { password, created_at, full_name, ...result } = user;
+            payload = {sub: user.id, email: user.email};
+            return payload;
+        }
+        return null;
     }
 }

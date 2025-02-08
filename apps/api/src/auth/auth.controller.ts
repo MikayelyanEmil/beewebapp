@@ -1,10 +1,12 @@
-import { Body, Controller, Post, Req, Res, UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Post, Req, Res, UseFilters, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { PrismaClientExceptionFilter } from 'src/prisma-client-exception/prisma-client-exception.filter';
 import { UsersService } from 'src/users/users.service';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { JWTPayload } from './interfaces/jwt-payload';
 
 @Controller('auth')
 export class AuthController {
@@ -25,8 +27,9 @@ export class AuthController {
     }
 
     @Post('login')
-    async login(@Req() req, @Res() res) {
-        const { access_token, refresh_token } = await this.authService.authenticate({ sub: '869823f6-9f88-44ee-9755-cc8b28f1defd', email: 'test2@aa.com' })
+    @UseGuards(LocalAuthGuard)
+    async login(@Req() req: Request, @Res() res: Response) {
+        const { access_token, refresh_token } = await this.authService.authenticate(req.user as JWTPayload)
         res.cookie('refresh_token', refresh_token, { maxAge: this.configService.get('COOKIE_MAX_AGE'), httpOnly: true });
         res.status(200).json({ access_token });
     }
