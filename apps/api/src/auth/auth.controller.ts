@@ -15,7 +15,7 @@ export class AuthController {
     @UsePipes(new ValidationPipe({ transform: true, whitelist: true })) // "cleans" incoming client data
     async signup(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
         const { access_token, refresh_token } = await this.authService.signup(createUserDto);
-        res.cookie('refresh_token', refresh_token, { maxAge: this.configService.get('COOKIE_MAX_AGE'), httpOnly: true, sameSite: "none", secure: true });
+        res.cookie('refresh_token', refresh_token, { maxAge: this.configService.get('COOKIE_MAX_AGE'), httpOnly: true });
         res.status(200).json({ access_token });
     }
 
