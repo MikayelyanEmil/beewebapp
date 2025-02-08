@@ -6,6 +6,7 @@ import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { TokensModule } from './tokens/tokens.module';
+import { WorkspacesModule } from './workspaces/workspaces.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { TokensModule } from './tokens/tokens.module';
       rootPath: join(__dirname, '../..', 'frontend', 'out'),
     }),
     AuthModule,
-    TokensModule
+    TokensModule,
+    WorkspacesModule
   ],
   controllers: [AppController],
   providers: [AppService],
