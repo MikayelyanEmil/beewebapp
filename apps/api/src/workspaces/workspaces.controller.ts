@@ -26,8 +26,9 @@ export class WorkspacesController {
     @Post(':slug')
     @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
     async create(@Body() createWorkspaceDto: CreateWorkspaceDto, @Param('slug') slug: string, @Req() req: Request, @Res() res: Response) {
-        const workspace = await this.workspacesService.create(createWorkspaceDto, slug, (req.user as JWTPayload).sub);
-        res.status(HttpStatus.CREATED).json({ workspace });
+        const data = await this.workspacesService.createOrSuggest(createWorkspaceDto, slug, (req.user as JWTPayload).sub);
+        if (typeof data == 'string') res.status(HttpStatus.OK).json({ slug: data });
+        else res.status(HttpStatus.CREATED).json({ data });
     }
 
     @Put(':slug')

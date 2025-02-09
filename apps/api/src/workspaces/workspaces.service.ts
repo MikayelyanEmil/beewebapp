@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { Prisma, Workspace } from '@prisma/client';
+import { Workspace } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
@@ -15,7 +15,10 @@ export class WorkspacesService {
         return await this.prisma.workspace.findFirstOrThrow({ where: { slug } });
     }
 
-    async create(createWorkspaceDto: CreateWorkspaceDto, slug: string, user_id: string): Promise<Workspace> {
+    async createOrSuggest(createWorkspaceDto: CreateWorkspaceDto, slug: string, user_id: string): Promise<Workspace | string> {
+        const workspace = await this.prisma.workspace.findFirst({ where: { slug }});
+        if (workspace) return `${workspace.slug}${Math.floor(Math.random() * 100)}`;
+
         return await this.prisma.workspace.create({
             data: {
                 ...createWorkspaceDto,
