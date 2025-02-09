@@ -1,13 +1,14 @@
 'use client'
 import Button from "@/components/Button/Button";
 import Input from "@/components/Input/Input";
+import submit from "@/handlers/submitAuthForm";
 import { useEffect, useRef, useState } from "react"
 
 export default function Page() {
-    const [data, setData] = useState('');
-    useEffect(() => {
-        fetch('api').then(res => res.text()).then(text => setData(text)).catch(e => setData('Error'))
-    }, [])
+    // const [data, setData] = useState('');
+    // useEffect(() => {
+    //     fetch('api').then(res => res.text()).then(text => setData(text)).catch(e => setData('Error'))
+    // }, [])
 
     const [newUser, setNewUser] = useState<boolean>(true);
     const inputEmail = useRef(null);
@@ -20,7 +21,7 @@ export default function Page() {
         <div id="auth-page">
             <div id='auth-form'>
                 <h1>Bee<span>Web</span></h1><hr />
-                <form onSubmit={(e) => null}>
+                <form onSubmit={(e) => submit(e, { form, newUser })}>
                     {newUser && <>
                         <Input type={'fullname'} reff={inputFullname} />
                     </>}
