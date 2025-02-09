@@ -1,42 +1,109 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+* {
+    font-family: 'Nunito Sans', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+    box-sizing: border-box;
 }
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+    height: 100%;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+#root {
+    height: 100%;
+    width: 100%;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+
+
+
+
+
+/*  */
+
+
+#auth-page {
+    display: flex;
+    width: inherit;
+    height: inherit;
+    align-items: center;
+    justify-content: center;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+#auth-page h1 {
+    color: #0a4fa4;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+#auth-page h1 span {
+    color: #a3a6ff;
+}
+
+#auth-page .app-button.variant-first,
+#auth-page .app-button.variant-second {
+    margin: 10px 0;
+}
+
+#auth-form {
+    text-align: center;
+    border: solid 1px #121212;
+    background-color: #f7f7f7;
+    padding: 2rem 2rem;
+    border-radius: 8px;
+    max-width: 400px;
+}
+
+#auth-form hr {
+    margin: 15px 0;
+}
+
+#auth-form form * {
+    margin: 5px 0;
+}
+
+/*  */
+
+.app-button {
+    font-size: 1rem;
+    font-family: inherit;
+    border: none;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.app-button.variant-first,
+.app-button.variant-second {
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+}
+
+.app-button.variant-first {
+    color: #0a4fa4;
+    background-color: white;
+}
+
+.app-button.variant-second {
+    color: white;
+    background-color: #0a4fa4;
+}
+
+.app-button.variant-third {
+    background: none;
+    font-weight: bold;
+    color: #0a4fa4;
+}
+
+.app-input {
+    outline: none;
+    padding: 0 5px;
+    font-size: 1rem;
+    font-family: inherit;
+    line-height: 2;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
 }

@@ -1,0 +1,41 @@
+#auth-page {
+    display: flex;
+    width: inherit;
+    height: inherit;
+    align-items: center;
+    justify-content: center;
+}
+
+#auth-page h1 {
+    color: #0a4fa4;
+}
+
+#auth-page h1 span {
+    color: #a3a6ff;
+}
+
+#auth-page .app-button.variant-first,
+#auth-page .app-button.variant-second {
+    margin: 10px 0;
+}
+
+#auth-form {
+    text-align: center;
+    border: solid 1px #121212;
+    background-color: #f7f7f7;
+    padding: 2rem 2rem;
+    border-radius: 8px;
+    max-width: 400px;
+}
+
+#auth-form hr {
+    margin: 15px 0;
+}
+
+#auth-form form * {
+    margin: 5px 0;
+}
+
+.test {
+    color: #0a4fa4;
+}

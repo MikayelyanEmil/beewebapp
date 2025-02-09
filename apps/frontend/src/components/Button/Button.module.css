@@ -1,0 +1,30 @@
+.app-button {
+    font-size: 1rem;
+    font-family: inherit;
+    border: none;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.app-button.variant-first,
+.app-button.variant-second {
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+}
+
+.app-button.variant-first {
+    color: #0a4fa4;
+    background-color: white;
+}
+
+.app-button.variant-second {
+    color: white;
+    background-color: #0a4fa4;
+}
+
+.app-button.variant-third {
+    background: none;
+    font-weight: bold;
+    color: #0a4fa4;
+}

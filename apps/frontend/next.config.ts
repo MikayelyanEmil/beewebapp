@@ -2,12 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  output: "export",
+  // output: "export",
   async rewrites() {
     return [
       {
         source: "/api/:path*",
-        destination: "http://localhost:5005/api/:path*"
+        destination: "http://localhost:5000/api/:path*"
       }
     ]
   },
