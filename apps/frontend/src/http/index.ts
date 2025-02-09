@@ -3,6 +3,7 @@ import axios, { AxiosError } from "axios";
 
 const api = axios.create({
     withCredentials: true,
+    baseURL: '/api'
     // baseURL: process.env.BACKEND_URL
 });
 

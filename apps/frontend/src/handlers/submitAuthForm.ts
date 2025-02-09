@@ -7,12 +7,12 @@ export default async function submit(e: FormEvent, options : SubmitAuthOptions):
     e.preventDefault();
     let { form, newUser } = options;
     const { inputEmail, inputFullname, inputPassword, inputUsername } = form;
-    const endpoint = 'api/auth/' + (newUser ? 'signup' : 'login');
+    const endpoint = 'auth/' + (newUser ? 'signup' : 'login');
     try {
         const data = { email: inputEmail.current.value, password: inputPassword.current.value, full_name: inputFullname?.current?.value, username: inputUsername?.current?.value };
         const response = await api.post(endpoint, data);
         localStorage.setItem('token', response.data.access_token);
-        window.location.href = '/';
+        // window.location.href = '/';
         // setLoginUser({ access_token: response.data.access_token });
         // navigate('/chats');
     } catch (error) {

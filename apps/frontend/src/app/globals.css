@@ -194,6 +194,11 @@ main .content {
     float: right;
 }
 
+.workspace-create-form .suggest-name {
+    font-size: 15px;
+    color: #0a4fa4;
+}
+
 .close-form-btn {
     float: right;
     box-sizing: border-box;
