@@ -5,6 +5,9 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
+    find(sub: any) {
+        throw new Error('Method not implemented.');
+    }
     constructor(private prisma: PrismaService) { }
 
     async create(data: Prisma.UserCreateInput): Promise<User> {
