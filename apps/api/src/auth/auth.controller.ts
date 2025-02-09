@@ -8,6 +8,7 @@ import { UsersService } from 'src/users/users.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JWTPayload } from './interfaces/jwt-payload';
 import { TokensService } from 'src/tokens/tokens.service';
+import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -41,5 +42,13 @@ export class AuthController {
         await this.tokensService.delete(req.cookies.refresh_token);
         res.clearCookie('refresh_token');
         res.sendStatus(200);
+    }
+
+    @Post('refresh')
+    @UseGuards(JwtRefreshGuard)
+    async refresh(@Req() req: Request, @Res() res: Response) {
+        const { access_token, refresh_token } = await this.authService.generateTokens(req.user as JWTPayload)
+        res.cookie('refresh_token', refresh_token, { maxAge: this.configService.get('COOKIE_MAX_AGE'), httpOnly: true });
+        res.status(200).json({ access_token });
     }
 }
