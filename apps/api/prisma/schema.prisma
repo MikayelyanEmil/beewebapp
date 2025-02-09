@@ -32,7 +32,7 @@ model Token {
 model Workspace {
   id                String             @id @default(uuid())
   user              User               @relation(fields: [user_id], references: [id])
-  user_id           String             @unique
+  user_id           String             
   name              String
   slug              String             @unique
   created_at        DateTime           @default(now())
