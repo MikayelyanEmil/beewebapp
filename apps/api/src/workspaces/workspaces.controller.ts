@@ -16,6 +16,12 @@ export class WorkspacesController {
         private workspacesService: WorkspacesService
     ) { }
 
+    @Get('all')
+    async getAll(@Req() req: Request, @Res() res: Response) {
+        const workspaces = await this.workspacesService.getAll((req.user as JWTPayload).sub);
+        res.status(HttpStatus.OK).json({ workspaces })
+    }
+
     @Get(':slug')
     async read(@Param('slug') slug: string, @Req() req: Request, @Res() res: Response) {
         const workspace = await this.workspacesService.read(slug); 

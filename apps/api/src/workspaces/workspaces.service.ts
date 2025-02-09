@@ -44,4 +44,15 @@ export class WorkspacesService {
         if (workspace.user_id != user_id) throw new ForbiddenException('Not allowed to delete');
         return await this.prisma.workspace.delete({ where: { slug } });
     }
+
+    async getAll(user_id): Promise<Workspace[]> {
+        return await this.prisma.workspace.findMany({
+            where: {
+                user_id
+            },
+            orderBy: {
+                updated_at: 'desc'
+            }
+        });
+    }
 }
