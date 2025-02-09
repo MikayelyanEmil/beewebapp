@@ -16,7 +16,15 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
         const status = HttpStatus.CONFLICT;
         response.status(status).json({
           statusCode: status,
-          message: `Account with that ${field} already exists.`,
+          // message: `Account with that ${field} already exists.`,
+        });
+        break;
+      }
+      case 'P2025': {
+        const status = HttpStatus.NOT_FOUND;
+        response.status(status).json({
+          statusCode: status,
+          // message: `Not allowed.`,
         });
         break;
       }
