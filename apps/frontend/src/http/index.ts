@@ -4,7 +4,6 @@ import axios, { AxiosError } from "axios";
 const api = axios.create({
     withCredentials: true,
     baseURL: '/api'
-    // baseURL: process.env.BACKEND_URL
 });
 
 api.interceptors.request.use((config) => {
@@ -12,16 +11,16 @@ api.interceptors.request.use((config) => {
     return config;
 })
 
-// api.interceptors.response.use(config => config, async (error) => {
-//     const originalRequest = error.config;
-//     const except = error.config.url != 'auth/login' && error.config.url != 'auth/signup';
-//     if (error.response?.status == 401 && error.config && !error.config._isRetry && except) {
-//         originalRequest._isRetry = true;
-//         const response = await axios.post<AuthResponse>(`${process.env.BACKEND_URL}/auth/refresh`, {}, {withCredentials: true})
-//         localStorage.setItem('token', response.data.access_token);
-//         return api.request(originalRequest);
-//     }
-//     else throw error;
-// })
+api.interceptors.response.use(config => config, async (error) => {
+    const originalRequest = error.config;
+    const except = error.config.url != 'auth/login' && error.config.url != 'auth/signup';
+    if (error.response?.status == 401 && error.config && !error.config._isRetry && except) {
+        originalRequest._isRetry = true;
+        const response = await axios.post(`api/auth/refresh`, {}, { withCredentials: true })
+        localStorage.setItem('token', response.data.access_token);
+        return api.request(originalRequest);
+    }
+    else throw error;
+});
 
 export { api };

@@ -22,10 +22,16 @@ export class WorkspacesController {
         res.status(HttpStatus.OK).json({ workspaces })
     }
 
+    @Get('check-slug/:slug')
+    async check(@Param('slug') slug: string, @Req() req: Request, @Res() res: Response) {
+        const suggestion = await this.workspacesService.checkAndSuggest(slug, (req.user as JWTPayload).sub);
+        res.status(HttpStatus.OK).json({ slug: suggestion });
+    }
+
     @Get(':slug')
     async read(@Param('slug') slug: string, @Req() req: Request, @Res() res: Response) {
         const workspace = await this.workspacesService.read(slug); 
-        if (workspace.user_id !=  (req.user as JWTPayload).sub) throw new ForbiddenException('Not allowed to read');
+        if (workspace.user_id != (req.user as JWTPayload).sub) throw new ForbiddenException('Not allowed to read');
         res.status(HttpStatus.OK).json({ workspace });
     }
 
@@ -34,7 +40,7 @@ export class WorkspacesController {
     async create(@Body() createWorkspaceDto: CreateWorkspaceDto, @Param('slug') slug: string, @Req() req: Request, @Res() res: Response) {
         const data = await this.workspacesService.createOrSuggest(createWorkspaceDto, slug, (req.user as JWTPayload).sub);
         if (typeof data == 'string') res.status(HttpStatus.OK).json({ slug: data });
-        else res.status(HttpStatus.CREATED).json({ data });
+        else res.status(HttpStatus.CREATED).json({ workspace: data });
     }
 
     @Put(':slug')

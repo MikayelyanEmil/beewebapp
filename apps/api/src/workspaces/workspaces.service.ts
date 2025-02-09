@@ -55,4 +55,10 @@ export class WorkspacesService {
             }
         });
     }
+
+    async checkAndSuggest(slug: string, user_id: string): Promise<string | null> {
+        const workspace = await this.prisma.workspace.findFirst({ where: { slug }});
+        if (workspace) return `${workspace.slug}${Math.floor(Math.random() * 100)}`;
+        return null;
+    }
 }

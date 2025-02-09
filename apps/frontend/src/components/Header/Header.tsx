@@ -1,3 +1,4 @@
+import logout from "@/handlers/logout";
 import Button from "../Button/Button";
 
 export default function Header() {
@@ -5,7 +6,7 @@ export default function Header() {
         <header>
             <nav>
                 <span>BeeWeb</span>
-                <Button variant="first" text="Log Out" />
+                <Button variant="first" text="Log Out" onClick={() => logout()}/>
             </nav>
         </header>
     </>
