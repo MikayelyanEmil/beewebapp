@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/http";
 import axios from "axios";
 import Button from "@/components/Button/Button";
+import WorkspaceCreateInput from "@/components/WorkspaceCreateInput/WorkspaceCreateInput";
 
 export default function Home() {
   const [workspaces, setWorkspaces] = useState([]);
@@ -47,6 +48,9 @@ export default function Home() {
           <a href="#">Contact</a>
         </div>
         <div className="content">
+          <WorkspaceCreateInput>
+            
+          </WorkspaceCreateInput>
         </div>
       </main>
       <footer></footer>

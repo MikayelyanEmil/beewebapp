@@ -153,7 +153,6 @@ nav span {
 }
 
 
-
 main .content {
     flex: 1; 
     padding: 30px;
@@ -163,45 +162,66 @@ main .content {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.activity-table {
+
+
+.workspace-create-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.activity-table td {
-    padding: 12px;
-    border-bottom: 1px solid #eee;
+.workspace-create-form {
+    width: 300px;
+    background-color: white;
+    margin: 10px 0;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    height: fit-content;
 }
 
-.tasks-section {
-    margin-top: 30px;
+.workspace-create-form div {
+    margin-top: 20px;
 }
 
-.task-item {
-    padding: 15px 0;
-    border-bottom: 1px solid #eee;
+.workspace-create-form button {
+    float: right;
 }
 
-.task-item:last-child {
-    border-bottom: none;
+.close-form-btn {
+    float: right;
+    box-sizing: border-box;
+    width: fit-content;
+    height: fit-content;
+    border: none;
+    background: none;
+    cursor: pointer;
 }
 
-.days-late {
-    color: #ff4444;
-    font-size: 0.9em;
+.textarea-title,
+.textarea-description {
+    width: 95%;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease-in-out;
+    resize: none;
+    outline: none;
+    font-size: 18px;
+    height: 120px;
+    padding: 6px;
 }
 
-.show-all {
-    text-align: center;
-    display: block;
-    margin-top: 15px;
-    color: #666;
-    text-decoration: none;
+.textarea-title {
+    height: 24px;
 }
 
-.user-footer {
-    margin-top: auto;
-    padding-top: 20px;
-    color: #666;
+.textarea-title:focus,
+.textarea-description:focus {
+    border-color: #0a4fa4;
 }
